@@ -1,11 +1,8 @@
+<meta charset="utf-8">
 <?php
 
-    session_start();
-
-    $pathFile = $_SERVER['DOCUMENT_ROOT'].'/class/Sys.php' ; //Include da classe principal, altere conforme necessário
+    $pathFile = $_SERVER['DOCUMENT_ROOT'].'/class/Admin.php' ;
 
     include($pathFile);
 
-    $sys = new Sys;
-    $sys->validar_login();
-    $pdo = $sys->getPdo(); //Pode usar mysqli também, só mudar getMysqli()
+    $admin = new Admin;
