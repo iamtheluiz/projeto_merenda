@@ -1,10 +1,10 @@
 <?php
-    include_once("init/init_user.php");
+    include_once("../init/init.php");
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <?php include('components/essenciais_head.php'); ?>
+        <?php include('../components/essenciais_head.php'); ?>
         <title>Lista de Salas</title>
 
         <!-- Estilo Personalizado -->
@@ -20,11 +20,16 @@
                 color:white;
                 padding:10px;
             }
-            #sala_atual{
-                margin-top:calc((100vh - 100px - 311px) / 2);
-            }
             #sala_atual p{
                 font-size: 18pt;
+            }
+            .controles i{
+                font-size:7rem;
+            }
+            .controles a{
+                height: 150px !important;
+                line-height: 150px;
+                text-align: center;
             }
         </style>
     </head>
@@ -41,7 +46,7 @@
                 <div class="lista">
                     <?php
 
-                        $salas = $usuario->exibir_salas();
+                        $salas = $admin->exibir_salas();
 
                         foreach ($salas as $sala) {
                             ?>
@@ -61,12 +66,25 @@
                 <p>A sala atual é: </p>
                 <h1>2MIN1</h1>
             </div>
+            <div class="controles col s12">
+                <div class="col s4 offset-s2">
+                    <a id="voltar_sala" href="#" class="btn waves-effect waves-light col s12"><i class="material-icons">arrow_back</i></a>
+                </div>
+                <div class="col s4">
+                    <a id="passar_sala" href="#" class="btn waves-effect waves-light col s12"><i class="material-icons">arrow_forward</i></a>
+                </div>
+            </div>
             <!-- Fim da Exbição da Sala atual -->
+
+            <!-- Link para a página de cadastros -->
+            <div class="col s12 center-align" style="margin-top:100px;">
+                <a href="administracao.php">Página de Administração</a>
+            </div>
 
         </div>
         <!-- Fim do Conteúdo da Página -->
 
         <!--Scripts-->
-        <?php include('components/essenciais_scripts.php'); ?>
+        <?php include('../components/essenciais_scripts.php'); ?>
     </body>
 </html>
