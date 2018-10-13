@@ -10,3 +10,4 @@
 <!-- Padrões -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="utf-8">
+<meta name="Description" content="Um site para organização de filas de merenda.">
