@@ -28,20 +28,15 @@ abstract class Utilitarios{
     /* Atributos */
     private $host = "localhost";		//Servidor do banco
     private $usuario = "root";			//Nome de usuario do banco
-    private $senha = "";			//Senha do usuario do banco
-    private $banco = "db_sample";	//Nome do banco
-    protected $mysqli;					//Conexão com o banco
-    protected $pdo;					//Conexão com o banco
+    private $senha = "usbw";			//Senha do usuario do banco
+    private $banco = "db_merenda";		//Nome do banco
+    protected $pdo;						//Conexão com o banco
 
     /* Métodos */
 
     //Conexão com banco
-    public function db_connect($tp){
-		if($tp == 1){
-			$this->mysqli = new mysqli($this->host, $this->usuario, $this->senha, $this->banco);
-		}else if($tp == 2){
-			$this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->banco.';port=3306',$this->usuario,$this->senha);
-		}
+    public function db_connect(){
+		$this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->banco.';charset=utf8;port=3307',$this->usuario,$this->senha);
     }
 
     //Função de login - EDITAR
@@ -75,9 +70,8 @@ abstract class Utilitarios{
 	}
 
     //Redireciona junto de uma mensagem (JS)
-	public function redirect($alert,$pag){
+	public function redirect($pag){
 		echo "<script>";
-		echo "alert('".$alert."');";
 		echo "window.location = '".$pag."';";
 		echo "</script>";
 	}
@@ -197,36 +191,5 @@ abstract class Utilitarios{
 	}
 	public function getMysqli(){
 		return $this->mysqli;
-	}
-
-	/* Funções de teste */
-	
-	//Função de verificação ISSET (POST e GET)
-	public function is_set($name,$appli,$tipo){ // arg1 - Array(nome de cada campo); arg2 - Array(apelido de cada campo); arg3 - Tipo de formulário (GET ou POST)
-
-		$process = [];       		//Array que irá guardar os valores que estão setados
-		$process['no_set'] = [];	//Indice do process que guarda quem não está setado
-		$process['all_set'] = true; //Retorno do isset(se todos os valores estão "setados" = true)	 
-		$nsc = 0;					//Contador de POST's não setados (no_set_count)
-
-		for($c = 0; $c <= count($name) - 1; $c++){	//Enquanto $c for menor que o numero de campos
-
-			if(isset($tipo[$name[$c]])){
-				if(!empty($tipo[$name[$c]])){
-					$process[$name[$c]] = $tipo[$name[$c]];   //Caso esteja setado, cria um indice no process com o nome do post e o valor dentro dele
-				}else{
-					$nsc++;
-					$process['all_set'] = 0;				//Não estão todos setados
-					$process['no_set'][$nsc] = $name[$c];	//Caso não esteja setado, ele guarda o nome no array 'no_set'
-				}
-			}else{
-				$nsc++;
-				$process['all_set'] = 0;					//Não estão todos setados
-				$process['no_set'][$nsc] = $name[$c];		//Caso não esteja setado, ele guarda o nome no array 'no_set'
-			}
-
-		}
-
-		return $process;
 	}
 }
