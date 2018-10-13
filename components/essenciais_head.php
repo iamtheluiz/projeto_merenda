@@ -8,5 +8,6 @@
 <link rel="stylesheet" rel="stylesheet" href="/css/style.css"> 
 
 <!-- Padrões -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
 <meta charset="utf-8">
+<meta name="Description" content="Um site para organização de filas de merenda.">
