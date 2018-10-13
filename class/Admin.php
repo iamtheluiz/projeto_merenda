@@ -33,6 +33,18 @@
                 $this->redirect("../administracao.php");
             }
         }
+        public function cadastrar_lista($dt_lista,$id_turno){
+
+            $sql = "INSERT into tb_lista values (null,'$dt_lista','$id_turno')";
+
+            //Efetua o cadastro
+            if($this->pdo->query($sql)){
+                //Caso envie
+                $this->redirect("../administracao.php");
+            }else{
+                $this->redirect("../administracao.php");
+            }
+        }
 
         /* Métodos Especiais */
 

@@ -36,6 +36,9 @@
 				background-color: transparent;
 				height: 50px;
 			}
+			.datepicker-modal{
+				z-index: 50000 !important;
+			}
 		</style>
 	</head>
 	<body>
@@ -106,6 +109,45 @@
 		</div>
 		<!-- Fim do Modal do cadastro de salas -->
 
+		<!-- Modal do cadastro de listas -->
+		<div id="cadastro_lista" class="modal modal-fixed-footer">
+			<div class="modal-content row">
+				<h4>Cadastro de Lista</h4>
+				<p>Aqui você pode cadastrar as listas que contém a ordem das filas de sua escola!</p>
+				<form action="actions/cadastrar_lista.php" method="post">
+					<div class="input-field col s12">
+						<i class="material-icons prefix">edit</i>
+						<input type="date" name="dt_lista" id="dt_lista">
+						<label for="dt_lista">Data da Lista</label>
+					</div>
+					<div class="input-field col s12">
+						<select name="id_turno">
+							<option value="" disabled selected>Selecione um turno</option>
+							<?php
+
+								$turnos = $admin->exibir_turnos();
+
+								foreach ($turnos as $turno) {
+									?>
+										<option value="<?php echo $turno['cd_turno']; ?>"><?php echo $turno['nm_turno']; ?></option>
+									<?php
+								}
+
+							?>
+						</select>
+						<label>Turno</label>
+					</div>
+					<div class="input-field col s12 center-align">
+						<button type="submit" class="btn col s12 l6 offset-l3">Enviar&nbsp;<i class="material-icons">send</i></button>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+			</div>
+		</div>
+		<!-- Fim do Modal do cadastro de lista -->
+
 		<!-- Conteúdo da Página -->
 		<div class="content row">
 
@@ -170,7 +212,50 @@
 					<!-- Fim da Tabela com os turnos -->
 				</div>
 			</div>
-			<!-- Fim do CRUD dos turnos -->
+			<!-- Fim do CRUD dos listas -->
+
+			<!-- CRUD das listas -->
+			<div id="crud_listas" class="card col l6 m6 s12 black white-text">
+				<div class="card-content">
+					<!-- Titulo do Cartão -->
+					<span class="card-title white-text left" style="font-weight: bolder;">Listas de Merenda</span>
+					<a class="waves-effect waves-light btn-floating right red modal-trigger" href="#cadastro_lista">
+						<i class="material-icons right">add</i>
+					</a>
+					<!-- Fim do Titulo do Cartão -->
+
+					<!-- Tabela com os listas -->
+					<table class="white-text">
+						<thead>
+							<tr>
+								<th>Código</th>
+								<th>Dia da Lista</th>
+								<th>Turno</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+
+								$listas = $admin->exibir_listas();
+
+								foreach ($listas as $lista) {
+									?>
+										<tr>
+											<td><?php echo $lista['cd_lista']; ?></td>
+											<td><?php echo $lista['dt_lista']; ?></td>
+											<td><?php echo $lista['nm_turno']; ?></td>
+											<td><a class="btn-floating" href="editar_lista.php?cd_lista=<?php echo $lista['cd_lista']; ?>"><i class="material-icons">edit</i></a></td>
+										</tr>
+									<?php
+								}
+
+							?>
+						</tbody>
+					</table>
+					<!-- Fim da Tabela com os listas -->
+				</div>
+			</div>
+			<!-- Fim do CRUD dos listas -->
 
 			<!-- CRUD das salas -->
 			<div id="crud_salas" class="card col l6 m6 s12 black white-text">
@@ -230,6 +315,7 @@
 			$(document).ready(function(){
 				$('.modal').modal();
 				$('select').formSelect();
+				$('.datepicker').datepicker();''
 			});
 		</script>
 	</body>

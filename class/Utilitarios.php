@@ -184,6 +184,14 @@ abstract class Utilitarios{
         return $dt_fim_final = $mes.' '.$dia.', '.$ano;
 	}
 
+	//Formata a data dd/mm/yyyy para yyyy-mm-dd
+	function formatar_data_para_banco($dt,$ex){
+		$dt = explode($ex,$dt);
+
+		$dt_final = $dt[2].'-'.$dt[1].'-'.$dt[0];
+		
+		return $dt_final;
+	}
 
 	/* Métodos Especiais */
 	public function getPdo(){
