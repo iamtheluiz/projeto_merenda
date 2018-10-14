@@ -30,9 +30,13 @@
             //Retorna os dados
             return $turnos;
         }
-        public function exibir_salas(){
+        public function exibir_salas($turno=''){
             //Consulta todas as salas
-            $sql = "SELECT * from tb_sala join tb_turno on id_turno = cd_turno";
+            if($turno != ''){
+              $sql = "SELECT * from tb_sala join tb_turno on id_turno = cd_turno where nm_turno = '$turno'";
+            }else{
+              $sql = "SELECT * from tb_sala join tb_turno on id_turno = cd_turno";
+            }
             $query = $this->pdo->query($sql);
 
             //Define um array de retorno
@@ -51,9 +55,24 @@
             //Retorna os dados
             return $salas;
         }
-        public function exibir_listas(){
+        public function exibir_listas($tp = '',$valor = ''){
             //Consulta todas as listas
-            $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
+			if($tp == 'cd'){
+				if($valor != ''){
+	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno where cd_lista = $valor";
+	            }else{
+	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
+	            }
+			}else if($tp == 'dt'){
+				if($valor != ''){
+	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno where dt_lista = $valor";
+	            }else{
+	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
+	            }
+			}else{
+				$sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
+			}
+
             $query = $this->pdo->query($sql);
 
             //Define um array de retorno
