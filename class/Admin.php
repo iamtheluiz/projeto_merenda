@@ -63,7 +63,7 @@
 					$row_v = $query_v->fetch(PDO::FETCH_OBJ);
 
 					//Faz um update
-					$sql_u = "UPDATE tb_sala_lista set nr_posicao = $c where cd_sala_lista = $row_v->cd_sala_lista";
+					$sql_u = "UPDATE tb_sala_lista set nr_posicao = $c, st_sala = 'esperando' where cd_sala_lista = $row_v->cd_sala_lista";
 					if($this->pdo->query($sql_u)){
 						//Sucesso
 		            }else{
@@ -71,7 +71,7 @@
 		            }
 				}else{
 					//Faz o cadastro
-					$sql_i = "INSERT into tb_sala_lista values (null,'$sala','$cd_lista','$c')";
+					$sql_i = "INSERT into tb_sala_lista values (null,'$sala','$cd_lista','$c',DEFAULT)";
 					if($this->pdo->query($sql_i)){
 						//Sucesso
 		            }else{

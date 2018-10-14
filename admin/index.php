@@ -46,15 +46,7 @@
                 <div class="lista">
                     <?php
 
-                        $salas = $admin->exibir_salas();
-
-                        foreach ($salas as $sala) {
-                            ?>
-                            <div class="item_sala" style="background-color: <?php echo $sala['tx_cor']; ?>;">
-                                <?php echo $sala['nm_sala']; ?>
-                            </div>
-                            <?php
-                        }
+                        $admin->exibir_fila();
 
                     ?>
                 </div>

@@ -57,20 +57,15 @@
         }
         public function exibir_listas($tp = '',$valor = ''){
             //Consulta todas as listas
+			$sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno ";
 			if($tp == 'cd'){
 				if($valor != ''){
-	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno where cd_lista = $valor";
-	            }else{
-	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
+	              $sql .= "where cd_lista = $valor";
 	            }
 			}else if($tp == 'dt'){
 				if($valor != ''){
-	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno where dt_lista = $valor";
-	            }else{
-	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
+	              $sql .= "where dt_lista = $valor";
 	            }
-			}else{
-				$sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
 			}
 
             $query = $this->pdo->query($sql);
@@ -90,6 +85,27 @@
             //Retorna os dados
             return $listas;
         }
+		public function exibir_fila(){
+			date_default_timezone_set('America/Sao_Paulo');
+			$sql = "SELECT * from tb_lista where dt_lista = '".date('Y-m-d')."'";
+			$query = $this->getPdo()->query($sql);
+
+			if($query->rowCount() > 0){
+				$row = $query->fetch(PDO::FETCH_OBJ);
+
+				$sql_v = "SELECT * from tb_sala_lista join tb_sala on id_sala = cd_sala where id_lista = $row->cd_lista";
+				$query_v = $this->getPdo()->query($sql_v);
+
+				while($row_v = $query_v->fetch(PDO::FETCH_OBJ)){
+					?>
+					<div class="item_sala" style="background-color: <?php echo $row_v->tx_cor; ?>;">
+						<?php echo $row_v->nm_sala; ?>
+					</div>
+					<?php
+				}
+
+			}
+		}
 
         /* Métodos Especiais */
 
