@@ -45,6 +45,45 @@
                 $this->redirect("../administracao.php");
             }
         }
+        public function guardar_posicao($cd_lista,$ordem){
+
+			$ordem = explode(',',$ordem);
+			$c = 0;	//Posição da sala
+
+			foreach ($ordem as $sala) {
+				$c++;
+
+				//Verifica se a sala já está cadastrada na lista
+				$sql_v = "SELECT * from tb_sala_lista where id_lista = $cd_lista and id_sala = $sala";
+				$query_v = $this->pdo->prepare($sql_v);
+				$query_v->execute();
+
+				if($query_v->rowCount() > 0){
+					//Já tem cadastro
+					$row_v = $query_v->fetch(PDO::FETCH_OBJ);
+
+					//Faz um update
+					$sql_u = "UPDATE tb_sala_lista set nr_posicao = $c where cd_sala_lista = $row_v->cd_sala_lista";
+					if($this->pdo->query($sql_u)){
+						//Sucesso
+		            }else{
+		                $this->alert("Ocorreu um erro!");
+		            }
+				}else{
+					//Faz o cadastro
+					$sql_i = "INSERT into tb_sala_lista values (null,'$sala','$cd_lista','$c')";
+					if($this->pdo->query($sql_i)){
+						//Sucesso
+		            }else{
+		                $this->alert("Ocorreu um erro!");
+		            }
+				}
+
+			}
+
+			$this->redirect("../administracao.php");
+
+        }
 
         /* Métodos Especiais */
 

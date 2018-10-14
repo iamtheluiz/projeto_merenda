@@ -112,7 +112,7 @@
 					<!-- Fim da Tabela com as listas -->
 
           <!-- Formulário que envia as posições -->
-          <form action="guardar_posicao.php" method="post">
+          <form action="actions/guardar_posicao.php" method="post">
             <input id="cds" type="hidden" name="cds" value="<?php echo $cds; ?>">
             <input id="lista" type="hidden" name="cd_lista" value="<?php echo $cd_lista; ?>">
             <div class="col s12">
