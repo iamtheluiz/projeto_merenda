@@ -97,6 +97,11 @@
 				$query_v = $this->getPdo()->query($sql_v);
 				$c = 0;
 
+				$retorno = (object) '';
+				$retorno->nr_posicao = '0';
+				$retorno->id_lista = $row->cd_lista;
+				$retorno->nm_sala = 'Final';
+
 				while($row_v = $query_v->fetch(PDO::FETCH_OBJ)){
 					if($c == 0){
 						$retorno = $row_v;

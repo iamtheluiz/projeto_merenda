@@ -91,7 +91,7 @@
 			$row = $query->fetch(PDO::FETCH_OBJ);
 
 			$sql_u = "UPDATE tb_sala_lista set st_sala = 'foi' where cd_sala_lista = ".$row->cd_sala_lista;
-			echo $sql_u;
+			//echo $sql_u;
 
 			if($this->pdo->query($sql_u)){
 				$this->redirect("../index.php");
@@ -106,7 +106,7 @@
 			$row = $query->fetch(PDO::FETCH_OBJ);
 
 			$sql_u = "UPDATE tb_sala_lista set st_sala = 'esperando' where cd_sala_lista = ".$row->cd_sala_lista;
-			echo $sql_u;
+			//echo $sql_u;
 
 			if($this->pdo->query($sql_u)){
 				$this->redirect("../index.php");

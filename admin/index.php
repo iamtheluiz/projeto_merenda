@@ -6,6 +6,7 @@
     <head>
         <?php include('../components/essenciais_head.php'); ?>
         <title>Lista de Salas</title>
+		<link rel="manifest" href="manifest_admin.json">
 
         <!-- Estilo Personalizado -->
         <style type="text/css">

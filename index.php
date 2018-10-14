@@ -6,6 +6,7 @@
     <head>
         <?php include('components/essenciais_head.php'); ?>
         <title>Lista de Salas</title>
+		<link rel="manifest" href="manifest.json">
 
         <!-- Estilo Personalizado -->
         <style type="text/css">
@@ -31,7 +32,7 @@
     <body>
 
         <!-- Conteúdo da Página -->
-        <div class="content row">
+        <div id="conteudo" class="content row">
 
             <!-- Exibição da ordem das salas -->
             <div id="fila" class="col s12 black">
@@ -60,5 +61,51 @@
 
         <!--Scripts-->
         <?php include('components/essenciais_scripts.php'); ?>
+		<!-- Scripts Personalizados -->
+		<script type="text/javascript">
+			function enviar_form(isto){
+				if(isto == null){
+					isto = $('#form_chat');
+				}
+				event.preventDefault();
+				var formDados = new FormData($(isto)[0]);
+
+				$.ajax({
+					url:'actions/msg_privado.php',
+					type:'POST',
+					data:formDados,
+					cache:false,
+					contentType:false,
+					processData:false,
+					success:function (data)
+					{
+						$("#form_chat").trigger("reset");
+						$("#tx_chat").html('');
+					},
+					dataType:'html'
+				});
+				return false;
+			}
+
+			function atualizar_fila() {
+
+				jQuery.ajax({
+					url: "actions/atualizar_fila.php",
+					dataType: "html",
+
+					success: function(response){
+						jQuery("#conteudo").html(response);
+						//console.log(1);
+					},
+					// quando houver erro
+					error: function(){
+						//alert("Ocorreu um erro durante a requisição");
+					}
+				});
+
+			}
+
+			setInterval(atualizar_fila,2000);
+		</script>
     </body>
 </html>
