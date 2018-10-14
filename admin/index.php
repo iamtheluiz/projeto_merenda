@@ -46,7 +46,7 @@
                 <div class="lista">
                     <?php
 
-                        $admin->exibir_fila();
+                        $first = $admin->exibir_fila();
 
                     ?>
                 </div>
@@ -56,7 +56,7 @@
             <!-- Sala atual -->
             <div id="sala_atual" class="col s12 center-align white-text">
                 <p>A sala atual é: </p>
-                <h1>2MIN1</h1>
+                <h1><?php echo $first->nr_posicao.'º - '.$first->nm_sala; ?></h1>
             </div>
             <div class="controles col s12">
                 <div class="col s4 offset-s2">
@@ -78,5 +78,15 @@
 
         <!--Scripts-->
         <?php include('../components/essenciais_scripts.php'); ?>
+		<script type="text/javascript">
+			$("#voltar_sala").on('click',function(){
+				//Volta a sala
+				window.location = "actions/controlar_fila.php?tp=voltar&cd_lista=<?php echo $first->id_lista; ?>";
+			});
+			$("#passar_sala").on('click',function(){
+				//passa a sala
+				window.location = "actions/controlar_fila.php?tp=passar&cd_lista=<?php echo $first->id_lista; ?>";
+			});
+		</script>
     </body>
 </html>

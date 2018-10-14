@@ -41,7 +41,7 @@
                 <div class="lista">
                     <?php
 
-						$usuario->exibir_fila();
+						$first = $usuario->exibir_fila();
 
                     ?>
                 </div>
@@ -51,7 +51,7 @@
             <!-- Sala atual -->
             <div id="sala_atual" class="col s12 center-align white-text">
                 <p>A sala atual é: </p>
-                <h1>2MIN1</h1>
+                <h1><?php echo $first->nr_posicao.'º - '.$first->nm_sala; ?></h1>
             </div>
             <!-- Fim da Exbição da Sala atual -->
 

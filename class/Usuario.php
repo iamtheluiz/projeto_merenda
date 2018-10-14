@@ -93,16 +93,23 @@
 			if($query->rowCount() > 0){
 				$row = $query->fetch(PDO::FETCH_OBJ);
 
-				$sql_v = "SELECT * from tb_sala_lista join tb_sala on id_sala = cd_sala where id_lista = $row->cd_lista";
+				$sql_v = "SELECT * from tb_sala_lista join tb_sala on id_sala = cd_sala where id_lista = $row->cd_lista and st_sala = 'esperando' order by nr_posicao";
 				$query_v = $this->getPdo()->query($sql_v);
+				$c = 0;
 
 				while($row_v = $query_v->fetch(PDO::FETCH_OBJ)){
+					if($c == 0){
+						$retorno = $row_v;
+						$c++;
+					}
 					?>
 					<div class="item_sala" style="background-color: <?php echo $row_v->tx_cor; ?>;">
 						<?php echo $row_v->nm_sala; ?>
 					</div>
 					<?php
 				}
+
+				return $retorno;	//Retorna a primeira sala
 
 			}
 		}

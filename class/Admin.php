@@ -84,6 +84,36 @@
 			$this->redirect("../administracao.php");
 
         }
+		public function passar_sala($cd_lista){
+			$sql = "SELECT * from tb_sala_lista where id_lista = $cd_lista and st_sala != 'foi' order by nr_posicao LIMIT 1";
+			$query = $this->pdo->query($sql);
+
+			$row = $query->fetch(PDO::FETCH_OBJ);
+
+			$sql_u = "UPDATE tb_sala_lista set st_sala = 'foi' where cd_sala_lista = ".$row->cd_sala_lista;
+			echo $sql_u;
+
+			if($this->pdo->query($sql_u)){
+				$this->redirect("../index.php");
+			}else{
+				$this->redirect("../index.php");
+			}
+		}
+		public function voltar_sala($cd_lista){
+			$sql = "SELECT * from tb_sala_lista where id_lista = $cd_lista and st_sala != 'esperando' order by nr_posicao DESC LIMIT 1";
+			$query = $this->pdo->query($sql);
+
+			$row = $query->fetch(PDO::FETCH_OBJ);
+
+			$sql_u = "UPDATE tb_sala_lista set st_sala = 'esperando' where cd_sala_lista = ".$row->cd_sala_lista;
+			echo $sql_u;
+
+			if($this->pdo->query($sql_u)){
+				$this->redirect("../index.php");
+			}else{
+				$this->redirect("../index.php");
+			}
+		}
 
         /* Métodos Especiais */
 
