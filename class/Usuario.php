@@ -55,13 +55,23 @@
             //Retorna os dados
             return $salas;
         }
-        public function exibir_listas($cd=''){
+        public function exibir_listas($tp = '',$valor = ''){
             //Consulta todas as listas
-            if($cd != ''){
-              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno where cd_lista = $cd";
-            }else{
-              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
-            }
+			if($tp == 'cd'){
+				if($valor != ''){
+	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno where cd_lista = $valor";
+	            }else{
+	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
+	            }
+			}else if($tp == 'dt'){
+				if($valor != ''){
+	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno where dt_lista = $valor";
+	            }else{
+	              $sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
+	            }
+			}else{
+				$sql = "SELECT * from tb_lista join tb_turno on id_turno = cd_turno";
+			}
 
             $query = $this->pdo->query($sql);
 

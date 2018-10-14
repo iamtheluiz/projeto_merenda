@@ -1,17 +1,28 @@
 <?php
 	include_once("../init/init.php");
 
-  //Verifica se o código da lista é válido
-  if(isset($_GET['cd_lista']) and !empty($_GET['cd_lista'])){
-    $cd_lista = $_GET['cd_lista'];
-    $lista = $admin->exibir_listas($cd_lista);
+	//Verifica se o código da lista é válido
+	if(isset($_GET['cd_lista']) and !empty($_GET['cd_lista'])){
+		$cd_lista = $_GET['cd_lista'];
+		$lista = $admin->exibir_listas($cd_lista);
 
-    if(empty($lista)){
-      $admin->redirect("administracao.php");
-    }
-  }else{
-    $admin->redirect("administracao.php");
-  }
+		if(empty($lista)){
+			$admin->redirect("administracao.php");
+		}else{
+			//Verifica se já existe uma fila cadastrada
+			$sql_fi = "SELECT * from tb_sala_lista join tb_sala on id_sala = cd_sala where id_lista = $cd_lista order by nr_posicao";
+			$query_fi = $admin->getPdo()->query($sql_fi);
+
+			if($query_fi->rowCount() > 0){
+				//Já tem lista
+				$qt_salas = $query_fi->rowCount();
+			}else{
+				$query_fi = '';
+			}
+		}
+	}else{
+		$admin->redirect("administracao.php");
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -87,38 +98,62 @@
 
 					<!-- Tabela com as listas -->
 					<div class="col s12" id="salas">
-            <?php
+            		<?php
 
-  						$salas = $admin->exibir_salas($lista[0]['nm_turno']);
-              $c = 0;
-              $cds = '';
+						//Verifica se já tem fila feita
+						if($query_fi != ''){
 
-  						foreach ($salas as $sala) {
-                $c++;
-                if($c == 1){
-                  $cds = $sala['cd_sala'];
-                }else{
-                  $cds .= ','.$sala['cd_sala'];
-                }
-  							?>
-  							<div cd_sala="<?php echo $sala['cd_sala']; ?>" class="drag_sala col s12" style="background-color: <?php echo $sala['tx_cor']; ?>; padding:10px;">
-  								<?php echo $sala['nm_sala']; ?>
-  							</div>
-  							<?php
-  						}
+							$c = 0;
+							$cds = '';
+
+							while($sala = $query_fi->fetch(PDO::FETCH_OBJ)){
+								$c++;
+								if($c == 1){
+				                  $cds = $sala->cd_sala;
+				                }else{
+				                  $cds .= ','.$sala->cd_sala;
+				                }
+								?>
+	  							<div cd_sala="<?php echo $sala->cd_sala; ?>" class="drag_sala col s12" style="background-color: <?php echo $sala->tx_cor; ?>; padding:10px;">
+	  								<?php echo $sala->nm_sala; ?>
+	  							</div>
+	  							<?php
+							}
+
+						}else{
+
+	  						$salas = $admin->exibir_salas($lista[0]['nm_turno']);
+							$c = 0;
+							$cds = '';
+
+							foreach ($salas as $sala) {
+			                	$c++;
+				                if($c == 1){
+				                  $cds = $sala['cd_sala'];
+				                }else{
+				                  $cds .= ','.$sala['cd_sala'];
+				                }
+	  							?>
+	  							<div cd_sala="<?php echo $sala['cd_sala']; ?>" class="drag_sala col s12" style="background-color: <?php echo $sala['tx_cor']; ?>; padding:10px;">
+	  								<?php echo $sala['nm_sala']; ?>
+	  							</div>
+	  							<?php
+	  						}
+						}
 
   					?>
-          </div>
+          			</div>
 					<!-- Fim da Tabela com as listas -->
 
-          <!-- Formulário que envia as posições -->
-          <form action="actions/guardar_posicao.php" method="post">
-            <input id="cds" type="hidden" name="cds" value="<?php echo $cds; ?>">
-            <input id="lista" type="hidden" name="cd_lista" value="<?php echo $cd_lista; ?>">
-            <div class="col s12">
-              <button type="submit" class="btn col s12 l6 offset-l3">Enviar <i class='material-icons'>send</i></button>
-            </div>
-          </form>
+					<!-- Formulário que envia as posições -->
+					<form action="actions/guardar_posicao.php" method="post">
+			            <input id="cds" type="hidden" name="cds" value="<?php echo $cds; ?>">
+			            <input id="lista" type="hidden" name="cd_lista" value="<?php echo $cd_lista; ?>">
+			            <div class="col s12">
+							<button type="submit" class="btn col s12 l6 offset-l3">Enviar <i class='material-icons'>send</i></button>
+			            </div>
+					</form>
+					<!-- Fim do Formulário que envia as posições -->
 				</div>
 			</div>
 			<!-- Fim do CRUD dos listas -->
